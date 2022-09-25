@@ -16,7 +16,8 @@ public class EmployeesDTO {
 	private Page page;
 	
 	
-	public EmployeesDTO() {}
+
+
 
 
 	public List<EmployeeDTO> get_embedded() {

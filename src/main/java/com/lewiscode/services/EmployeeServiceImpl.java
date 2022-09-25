@@ -7,6 +7,8 @@ import com.lewiscode.models.Employee;
 import com.lewiscode.models.dto.EmployeeDTO;
 import com.lewiscode.models.dto.EmployeesDTO;
 
+import javax.transaction.Transactional;
+
 public class EmployeeServiceImpl implements EmployeeService {
 
 	
@@ -21,9 +23,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	public Employee getEmployeeById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+
+
+		 return employeeDAO.getEmployeeById(id);
 	}
 
 	@Override

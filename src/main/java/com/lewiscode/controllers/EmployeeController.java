@@ -2,13 +2,12 @@ package com.lewiscode.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.lewiscode.exceptions.CustomNotFoundException;
+import com.lewiscode.models.Employee;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lewiscode.models.dto.EmployeeDTO;
 import com.lewiscode.models.dto.EmployeesDTO;
@@ -60,6 +59,29 @@ public class EmployeeController{
 	
 		
 	}
+
+
+	@GetMapping("{id}")
+	public ResponseEntity<EmployeeDTO> returnById(@PathVariable int id, HttpServletRequest request)
+	{
+
+		Employee employeeId = employeeService.getEmployeeById(id);
+
+		if(employeeId == null)
+		{
+			throw new CustomNotFoundException("Id not found");
+		}
+
+		String fullUrl = request.getRequestURL().toString();
+
+		EmployeeDTO employeeDTO  = new EmployeeDTO(employeeId);
+
+		employeeDTO.AddLink(fullUrl, "self");
+
+		return ResponseEntity.ok().body(employeeDTO);
+
+	}
+
 	
 	
 	
