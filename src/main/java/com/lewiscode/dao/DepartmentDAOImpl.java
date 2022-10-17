@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 
+import com.lewiscode.models.Employee;
 import org.hibernate.Session;
 
 
@@ -53,5 +54,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		
 		
 	}
+
+
 
 }

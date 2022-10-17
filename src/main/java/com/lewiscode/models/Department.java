@@ -1,19 +1,17 @@
 package com.lewiscode.models;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name="department")
 @Entity
 public class Department  implements Serializable {
 	
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 
@@ -25,6 +23,10 @@ public class Department  implements Serializable {
 	
 	@Column(name="name")
 	private String name;
+
+
+	@OneToMany(mappedBy="department")
+	private List<Employee> employees;
 	
 	public Department()
 	{}

@@ -6,9 +6,13 @@ import com.lewiscode.dao.EmployeeDAO;
 import com.lewiscode.models.Employee;
 import com.lewiscode.models.dto.EmployeeDTO;
 import com.lewiscode.models.dto.EmployeesDTO;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+
+
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
 	
@@ -17,9 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	
 	@Override
+	@Transactional
 	public EmployeesDTO getEmployees(int pagNumber, int pagSize, String urlEmployee) {
-		// TODO Auto-generated method stub
-		return null;
+
+
+
+		return employeeDAO.getEmployees(pagNumber,pagSize,urlEmployee);
 	}
 
 	@Override
@@ -30,9 +37,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		 return employeeDAO.getEmployeeById(id);
 	}
 
+
+	@Transactional
 	@Override
 	public void addEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+
+		employeeDAO.addEmployee(employee);
 		
 	}
 

@@ -1,6 +1,7 @@
 package com.lewiscode.controllers;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import com.lewiscode.exceptions.CustomNotFoundException;
 import com.lewiscode.models.Employee;
@@ -15,66 +16,60 @@ import com.lewiscode.services.EmployeeService;
 
 @RestController
 @RequestMapping("/api/employee")
-public class EmployeeController{
+public class EmployeeController {
 
-	
+
 	@Autowired
 	private EmployeeService employeeService;
 
-	
+
 	@GetMapping()
-	public ResponseEntity<EmployeesDTO> returnAll(@RequestParam(value="pagNumber", required=false) Integer pagNumber,
-			@RequestParam(value="pagSize", required=false) Integer pagSize, HttpServletRequest request)
-	{
-		
-		
-		if(pagNumber == null && pagSize == null)
-		{
+	public ResponseEntity<EmployeesDTO> returnAll(@RequestParam(value = "pagNumber", required = false) Integer pagNumber,
+												  @RequestParam(value = "pagSize", required = false) Integer pagSize, HttpServletRequest request) {
+
+
+		if (pagNumber == null && pagSize == null) {
 			pagNumber = 0;
 			pagSize = 0;
 		}
-		
+
 		String fullUrl = request.getRequestURI().toString();
 		String urlForEmployees = request.getRequestURI().toString();
-		
-		
+
+
 		EmployeesDTO employeesDTO = employeeService.getEmployees(pagNumber, pagSize, fullUrl);
-		
-		if (!(pagNumber <= 0 && pagSize <= 0))
-		{
+
+		if (!(pagNumber <= 0 && pagSize <= 0)) {
 			urlForEmployees += "?pagNumber=" + pagNumber + "&pagSize" + pagSize;
 		}
-		
-		
+
+
 		employeesDTO.addLink(urlForEmployees, "getAllEmployees");
-		
-		
-		if (employeesDTO.get_embedded().isEmpty())
-		{
+
+
+		if (employeesDTO.get_embedded().isEmpty()) {
 			return ResponseEntity.notFound().build();
-			
+
 		}
-		
+
 		return ResponseEntity.ok().body(employeesDTO);
-	
-		
+
+
 	}
 
 
 	@GetMapping("{id}")
-	public ResponseEntity<EmployeeDTO> returnById(@PathVariable int id, HttpServletRequest request)
-	{
+	public ResponseEntity<EmployeeDTO> returnById(@PathVariable int id, HttpServletRequest request) {
 
 		Employee employeeId = employeeService.getEmployeeById(id);
 
-		if(employeeId == null)
-		{
+		if (employeeId == null) {
 			throw new CustomNotFoundException("Id not found");
 		}
 
 		String fullUrl = request.getRequestURL().toString();
 
-		EmployeeDTO employeeDTO  = new EmployeeDTO(employeeId);
+		EmployeeDTO employeeDTO = new EmployeeDTO(employeeId);
 
 		employeeDTO.AddLink(fullUrl, "self");
 
@@ -82,8 +77,19 @@ public class EmployeeController{
 
 	}
 
-	
-	
+
+	@PostMapping
+	public ResponseEntity<Void> Create(@RequestBody @Valid Employee employee) {
+		if (employee == null) {
+			throw new RuntimeException("Employee is empty");
+		}
+		employeeService.addEmployee(employee);
+
+		return ResponseEntity.status(201).build();
+	}
+
+
+
 	
 	
 }
