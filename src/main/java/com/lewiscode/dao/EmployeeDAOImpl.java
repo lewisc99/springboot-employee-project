@@ -113,15 +113,38 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 	}
 	@Override
-	public Employee updateEmployee(int ind, Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+	public Employee updateEmployee(int id, EmployeeCreation newEmployee) {
+
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		Department department = departmentService.getDepartmentById(newEmployee.getDepartment());
+
+		Employee currentEmployee = getEmployeeById(id);
+		currentEmployee.setDepartment(department);
+
+		Employee updatedEmployee = authorizedChangeProperty(currentEmployee, newEmployee );
+
+		currentSession.save(updatedEmployee);
+		return updatedEmployee;
 	}
+
+
 
 	@Override
 	public void deleteEmployee(int id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	public Employee authorizedChangeProperty(Employee currentEmployee, EmployeeCreation newEmployee)
+	{
+
+		currentEmployee.setEmail(newEmployee.getEmail());
+		currentEmployee.setName(newEmployee.getName());
+
+		return currentEmployee;
+
 	}
 
 }

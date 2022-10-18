@@ -47,10 +47,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 
+
+
+	@Transactional
 	@Override
-	public Employee updateEmployee(int ind, Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+	public Employee updateEmployee(int id, EmployeeCreation employee) {
+		return employeeDAO.updateEmployee(id, employee);
 	}
 
 	@Override

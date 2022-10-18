@@ -93,6 +93,33 @@ public class EmployeeController {
 	}
 
 
+	@PutMapping(value = "{id}")
+	public ResponseEntity<EmployeeDTO> Update(@PathVariable int id, @RequestBody @Valid EmployeeCreation employee,
+											  HttpServletRequest request)
+	{
+
+		Employee employeeId = employeeService.getEmployeeById(id);
+
+		String fullURL = request.getRequestURI().toString();
+
+		if (employeeId == null)
+		{
+			throw new CustomNotFoundException("id not found: " + id);
+		}
+
+		if (employee == null)
+		{
+			ResponseEntity.badRequest().build();
+		}
+
+		Employee updatedEmployee = employeeService.updateEmployee(id, employee);
+		EmployeeDTO employeeDTO = new EmployeeDTO(updatedEmployee);
+		employeeDTO.AddLink(fullURL, "self");
+
+		return ResponseEntity.status(200).body(employeeDTO);
+
+
+	}
 
 	
 	
