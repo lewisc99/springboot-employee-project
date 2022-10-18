@@ -1,5 +1,7 @@
 package com.lewiscode.models;
 
+import com.lewiscode.models.dto.EmployeeCreation;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -50,11 +52,18 @@ public class Employee  implements Serializable{
 	
 	}
 
+	public Employee(String name, String email, Department department) {
+		this.name = name;
+		this.email = email;
+		this.department  = department;
+	}
+
 	public Employee(String name, String email) {
 		this.name = name;
 		this.email = email;
 	
 	}
+
 
 
 	public int getId() {
@@ -87,5 +96,7 @@ public class Employee  implements Serializable{
 	}
 
 
-
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 }

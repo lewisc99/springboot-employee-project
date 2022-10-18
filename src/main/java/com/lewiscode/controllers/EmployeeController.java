@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import com.lewiscode.exceptions.CustomNotFoundException;
 import com.lewiscode.models.Employee;
+import com.lewiscode.models.dto.EmployeeCreation;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -79,11 +80,14 @@ public class EmployeeController {
 
 
 	@PostMapping
-	public ResponseEntity<Void> Create(@RequestBody @Valid Employee employee) {
-		if (employee == null) {
+	public ResponseEntity<Void> Create(@RequestBody @Valid EmployeeCreation employeeCreation) {
+		if (employeeCreation == null) {
 			throw new RuntimeException("Employee is empty");
 		}
-		employeeService.addEmployee(employee);
+
+
+
+		employeeService.addEmployee(employeeCreation);
 
 		return ResponseEntity.status(201).build();
 	}

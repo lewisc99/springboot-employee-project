@@ -2,6 +2,9 @@ package com.lewiscode.dao;
 
 import javax.persistence.EntityManager;
 
+import com.lewiscode.models.Department;
+import com.lewiscode.models.dto.EmployeeCreation;
+import com.lewiscode.services.DepartmentService;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +21,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Autowired
 	private EntityManager entityManager;
-	
+
+	@Autowired
+	private DepartmentService departmentService;
 	
 	@Override
 	public EmployeesDTO getEmployees(int pagNumber, int pagSize, String urlEmployee) {
@@ -87,13 +92,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
-	public void addEmployee(Employee employee)
+	public void addEmployee(EmployeeCreation employeeCreation)
 	{
 		try
 		{
 			Session currentSession = entityManager.unwrap(Session.class);
 
-			employee.setId(0);
+			//employee.setId(0);
+
+			Department getDepartment = departmentService.getDepartmentById(employeeCreation.getDepartment());
+
+			//public Employee(int id, String name, String email, Department department)
+			Employee employee = new Employee(employeeCreation.getName(), employeeCreation.getEmail(),  getDepartment);
 
 			currentSession.save(employee);
 		}

@@ -1,5 +1,6 @@
 package com.lewiscode.services;
 
+import com.lewiscode.models.dto.EmployeeCreation;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lewiscode.dao.EmployeeDAO;
@@ -40,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Transactional
 	@Override
-	public void addEmployee(Employee employee) {
+	public void addEmployee(EmployeeCreation employee) {
 
 		employeeDAO.addEmployee(employee);
 		

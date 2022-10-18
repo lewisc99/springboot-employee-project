@@ -1,6 +1,7 @@
 package com.lewiscode.dao;
 
 import com.lewiscode.models.Employee;
+import com.lewiscode.models.dto.EmployeeCreation;
 import com.lewiscode.models.dto.EmployeeDTO;
 import com.lewiscode.models.dto.EmployeesDTO;
 
@@ -12,7 +13,7 @@ public interface EmployeeDAO {
 	
 	public Employee getEmployeeById(int id);
 	
-	public void addEmployee( Employee employee);
+	public void addEmployee( EmployeeCreation employee);
 	
 	public Employee updateEmployee( int ind, Employee employee);
 	

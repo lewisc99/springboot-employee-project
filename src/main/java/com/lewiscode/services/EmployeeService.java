@@ -2,6 +2,7 @@ package com.lewiscode.services;
 
 
 import com.lewiscode.models.Employee;
+import com.lewiscode.models.dto.EmployeeCreation;
 import com.lewiscode.models.dto.EmployeesDTO;
 
 public interface EmployeeService {
@@ -11,7 +12,7 @@ public interface EmployeeService {
 	
 	public Employee getEmployeeById(int id);
 	
-	public void addEmployee( Employee employee);
+	public void addEmployee( EmployeeCreation employee);
 	
 	public Employee updateEmployee( int ind, Employee employee);
 	
