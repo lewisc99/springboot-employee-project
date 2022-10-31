@@ -56,8 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteEmployee(int id) {
-		// TODO Auto-generated method stub
+
+		employeeDAO.deleteEmployee(id);
 		
 	}
 

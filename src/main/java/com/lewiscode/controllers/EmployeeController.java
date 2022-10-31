@@ -121,6 +121,19 @@ public class EmployeeController {
 
 	}
 
+	@DeleteMapping("{id}")
+	public ResponseEntity<Void> Delete(@PathVariable int id)
+	{
+		Employee employeeId = employeeService.getEmployeeById(id);
+
+		if (employeeId == null)
+		{
+			throw new CustomNotFoundException("id not found: " + id);
+		}
+		employeeService.deleteEmployee(id);
+		return ResponseEntity.status(204).build();
+	}
+
 	
 	
 }

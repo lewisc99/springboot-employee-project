@@ -35,7 +35,7 @@ public class Employee  implements Serializable{
 
 
 	@JoinColumn(name="department_id")
-	@ManyToOne( cascade= CascadeType.MERGE)
+	@ManyToOne
 	private Department department;
 
 

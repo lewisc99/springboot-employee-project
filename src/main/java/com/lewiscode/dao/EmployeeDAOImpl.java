@@ -132,8 +132,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void deleteEmployee(int id) {
-		// TODO Auto-generated method stub
-		
+
+		try
+		{
+			Session session = entityManager.unwrap(Session.class);
+
+			Employee employeeId = getEmployeeById(id);
+			session.remove(employeeId);
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException();
+		}
+
 	}
 
 
